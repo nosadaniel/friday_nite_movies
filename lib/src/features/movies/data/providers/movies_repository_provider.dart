@@ -6,11 +6,11 @@ import 'package:friday_nite_movies/env/env.dart';
 import 'package:friday_nite_movies/src/features/movies/data/movies_abstract_repository.dart';
 import 'package:friday_nite_movies/src/features/movies/data/movies_repository.dart';
 import 'package:friday_nite_movies/src/utils/extensions/cancel_token_ref.dart';
-import 'package:friday_nite_movies/src/utils/network/dio_provider.dart';
+import 'package:friday_nite_movies/src/utils/network/providers/dio_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../domain/tmdb_movie.dart';
-import '../domain/tmdb_movies_response.dart';
+import '../../domain/tmdb_movie.dart';
+import '../../domain/tmdb_movies_response.dart';
 
 part 'movies_repository_provider.g.dart';
 

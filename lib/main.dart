@@ -16,7 +16,7 @@ class MyApp extends ConsumerWidget {
       routerConfig: goRouter,
       title: "Flutter Demo",
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
+      theme: ThemeData.dark(useMaterial3: true),
     );
   }
 }

@@ -19,6 +19,7 @@ class MoviesRepository implements MoviesAbstractRepository {
     );
     final String url = uri.toString();
     final Response response = await client.get(url, cancelToken: cancelToken);
+
     return TMDBMovie.fromJson(response.data);
   }
 
@@ -33,6 +34,7 @@ class MoviesRepository implements MoviesAbstractRepository {
     );
     final String url = uri.toString();
     final Response response = await client.get(url, cancelToken: cancelToken);
+    //log("data => ${response.data}");
     return TMDBMoviesResponse.fromJson(response.data);
   }
 
