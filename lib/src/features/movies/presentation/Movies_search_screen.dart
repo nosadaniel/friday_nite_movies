@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:friday_nite_movies/src/features/movies/data/providers/movies_repository_provider.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/movie_list_tile.dart';
+import 'package:friday_nite_movies/src/features/movies/presentation/movie_list_tile_shimmer.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/movies_search_bar.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/notifier_provider/movies_search_query_notifier.dart';
 
@@ -61,7 +62,7 @@ class MoviesSearchScreen extends ConsumerWidget {
                     error: (err, stack) => indexInPage == 0
                         ? Text(" error => ${stack.toString()}")
                         : SizedBox.shrink(),
-                    loading: () => CircularProgressIndicator());
+                    loading: () => MovieListTileShimmer());
               },
             ),
           ),

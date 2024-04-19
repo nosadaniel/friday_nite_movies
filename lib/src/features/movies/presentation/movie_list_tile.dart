@@ -17,7 +17,7 @@ class MovieListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
         child: GestureDetector(
           onTap: onPressed,
           child: Row(
@@ -36,7 +36,7 @@ class MovieListTile extends StatelessWidget {
                   ]
                 ],
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 8),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
