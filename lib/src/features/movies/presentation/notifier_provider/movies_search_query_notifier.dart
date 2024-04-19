@@ -18,8 +18,8 @@ class MoviesSearchQueryNotifier extends _$MoviesSearchQueryNotifier {
     _streamSubscription = _searchQueryController.stream.listen((query) {
       //cancel existing timer if any
       _debouceTimer?.cancel();
-      //set a new timer for 5secs to debounce the query
-      _debouceTimer = Timer(const Duration(seconds: 5), () {
+      //set a new timer for 0.5secs to debounce the query
+      _debouceTimer = Timer(const Duration(milliseconds: 500), () {
         _updateState(query);
       });
     });

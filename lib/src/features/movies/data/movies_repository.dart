@@ -47,7 +47,7 @@ class MoviesRepository implements MoviesAbstractRepository {
       path: TMDB_SEARCH_VERSION,
       queryParameters: {
         'api_key': apiKey,
-        'page': "$queryData.page",
+        'page': "${queryData.page}",
         'query': queryData.query
       },
     );

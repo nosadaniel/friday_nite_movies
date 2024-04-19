@@ -11,7 +11,7 @@ _$TMDBMovieImpl _$$TMDBMovieImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       title: json['title'] as String,
       overview: json['overview'] as String,
-      posterPath: json['poster_path'] as String,
+      posterPath: json['poster_path'] as String?,
       releaseDate: json['release_date'] as String?,
     );
 

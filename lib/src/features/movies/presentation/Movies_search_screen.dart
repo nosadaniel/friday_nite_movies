@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:friday_nite_movies/src/features/movies/data/providers/movies_repository_provider.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/movie_list_tile.dart';
+import 'package:friday_nite_movies/src/features/movies/presentation/movie_list_tile_error.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/movie_list_tile_shimmer.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/movies_search_bar.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/notifier_provider/movies_search_query_notifier.dart';
@@ -45,13 +46,15 @@ class MoviesSearchScreen extends ConsumerWidget {
                 // Note that ref.watch is called for up to pageSize items
                 // with the same page and query arguments (but this is ok since data is cached)
                 final fetchResponse = ref.watch(
-                  fetchMoviesProvider(queryData: (page: page, query: "")),
+                  fetchMoviesProvider(queryData: (page: page, query: query)),
                 );
                 return fetchResponse.when(
                     data: (data) {
                       log('index: $index, page: $page, indexInPage: $indexInPage');
                       // This condition only happens if a null itemCount is given
+                      // also when query does return empty result
                       if (indexInPage >= data.results.length) {
+                        //todo show some ui if result is empty
                         return null;
                       }
                       return MovieListTile(
@@ -59,9 +62,16 @@ class MoviesSearchScreen extends ConsumerWidget {
                         debugIndex: index,
                       );
                     },
-                    error: (err, stack) => indexInPage == 0
-                        ? Text(" error => ${stack.toString()}")
-                        : SizedBox.shrink(),
+                    error: (err, stack) {
+                      log("error => $err");
+                      return MovieListTileError(
+                        query: query,
+                        page: page,
+                        indexInPage: indexInPage,
+                        error: err.toString(),
+                        isLoading: fetchResponse.isLoading,
+                      );
+                    },
                     loading: () => MovieListTileShimmer());
               },
             ),

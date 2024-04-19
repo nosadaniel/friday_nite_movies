@@ -9,8 +9,8 @@ class TMDBMovie with _$TMDBMovie {
     required int id,
     required String title,
     required String overview,
-    @JsonKey(name: 'poster_path') required String posterPath,
-    @JsonKey(name: 'release_date') required String? releaseDate,
+    @JsonKey(name: 'poster_path') String? posterPath,
+    @JsonKey(name: 'release_date') String? releaseDate,
   }) = _TMDBMovie;
 
   factory TMDBMovie.fromJson(Map<String, Object?> json) =>

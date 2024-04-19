@@ -29,7 +29,7 @@ class _MoviesSearchBarState extends ConsumerState<MoviesSearchBar> {
             Expanded(
               child: TextField(
                 controller: _textController,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.zero,
