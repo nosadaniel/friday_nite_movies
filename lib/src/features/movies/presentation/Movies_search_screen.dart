@@ -31,54 +31,74 @@ class MoviesSearchScreen extends ConsumerWidget {
           const MoviesSearchBar(),
           totalResults == 0 ? MovieNotFound() : SizedBox.shrink(),
           Expanded(
-            child: ListView.builder(
-              // use a different key for each query, ensuring the scroll
-              // position is reset when the query and results change
-              key: ValueKey(query),
-              // * pass the itemCount explicitly to prevent unnecessary renders
-              // * during overscroll
-              itemCount: totalResults,
-              itemBuilder: (context, index) {
-                //get the page integer value of the division
-                final page = index ~/ pageSize + 1;
-                //get the reminder value
-                final indexInPage = index % pageSize;
-                // use the fact that this is an infinite list to fetch a new page
-                // as soon as the index exceeds the page size
-                // Note that ref.watch is called for up to pageSize items
-                // with the same page and query arguments (but this is ok since data is cached)
-                final fetchResponse = ref.watch(
-                  fetchMoviesProvider(queryData: (page: page, query: query)),
-                );
-                return fetchResponse.when(
-                    data: (data) {
-                      log('index: $index, page: $page, indexInPage: $indexInPage');
-                      // This condition only happens if a null itemCount is given
-                      // also when query does return empty result
-                      if (indexInPage >= data.results.length) {
-                        return null;
-                      }
-                      return MovieListTile(
-                        movie: data.results[indexInPage],
-                        debugIndex: index,
-                      );
-                    },
-                    error: (err, stack) {
-                      log("error => $err");
-                      return MovieListTileError(
-                        query: query,
-                        page: page,
-                        indexInPage: indexInPage,
-                        error: err.toString(),
-                        isLoading: fetchResponse.isLoading,
-                      );
-                    },
-                    loading: () => MovieListTileShimmer());
+            child: RefreshIndicator(
+              onRefresh: () async {
+                await onRefresh(ref: ref, query: query);
               },
+              child: ListView.builder(
+                // use a different key for each query, ensuring the scroll
+                // position is reset when the query and results change
+                key: ValueKey(query),
+                // * pass the itemCount explicitly to prevent unnecessary renders
+                // * during overscroll
+                itemCount: totalResults,
+                itemBuilder: (context, index) {
+                  //get the page integer value of the division
+                  final page = index ~/ pageSize + 1;
+                  //get the reminder value
+                  final indexInPage = index % pageSize;
+                  // use the fact that this is an infinite list to fetch a new page
+                  // as soon as the index exceeds the page size
+                  // Note that ref.watch is called for up to pageSize items
+                  // with the same page and query arguments (but this is ok since data is cached)
+                  final fetchResponse = ref.watch(
+                    fetchMoviesProvider(queryData: (page: page, query: query)),
+                  );
+                  return fetchResponse.when(
+                      data: (data) {
+                        log('index: $index, page: $page, indexInPage: $indexInPage');
+                        // This condition only happens if a null itemCount is given
+                        // also when query does return empty result
+                        if (indexInPage >= data.results.length) {
+                          return null;
+                        }
+                        return MovieListTile(
+                          movie: data.results[indexInPage],
+                          debugIndex: index,
+                        );
+                      },
+                      error: (err, stack) {
+                        log("error => $err");
+                        return MovieListTileError(
+                          query: query,
+                          page: page,
+                          indexInPage: indexInPage,
+                          error: err.toString(),
+                          isLoading: fetchResponse.isLoading,
+                        );
+                      },
+                      loading: () => MovieListTileShimmer());
+                },
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  //callback on pull
+  Future<void> onRefresh(
+      {required WidgetRef ref, required String query, int? page}) async {
+    // dispose all the pages previously fetched. Next read will refresh them
+    ref.invalidate(fetchMoviesProvider);
+    // keep showing the progress indicator until the first page is fetched
+    try {
+      await ref.read(
+          fetchMoviesProvider(queryData: (page: page ?? 1, query: query))
+              .future);
+    } catch (e) {
+      // fail silently as the provider error state is handled inside the ListView
+    }
   }
 }
