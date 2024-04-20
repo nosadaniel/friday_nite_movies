@@ -1,21 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:friday_nite_movies/src/common_widgets/movie_poster.dart';
 import 'package:friday_nite_movies/src/features/movies/domain/tmdb_movie.dart';
+import 'package:friday_nite_movies/src/helpers_providers/movie_poster_size.dart';
 
-import '../../../common_widgets/top_gradient.dart';
+import '../../../../common_widgets/top_gradient.dart';
+import '../../domain/tmdb_poster.dart';
 
-class MovieListTile extends StatelessWidget {
+class MovieListTile extends ConsumerWidget {
   const MovieListTile(
-      {required this.movie, this.debugIndex, this.onPressed, super.key});
+      {required this.movie,
+      this.debugIndex,
+      this.onPressed,
+      this.posterSize,
+      super.key});
   final TMDBMovie movie;
   final int? debugIndex;
   final VoidCallback? onPressed;
-  static const posterHeight = 150.0;
+  final PosterSize? posterSize;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final imageSize = ref.read(getImageSizeProvider(size: posterSize));
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
         child: GestureDetector(
@@ -25,10 +33,11 @@ class MovieListTile extends StatelessWidget {
               Stack(
                 children: [
                   SizedBox(
-                    width:
-                        posterHeight * (MoviePoster.width / MoviePoster.height),
-                    height: posterHeight,
-                    child: MoviePoster(imagePath: movie.posterPath),
+                    width: 90 * (imageSize.width / imageSize.height),
+                    height: 90,
+                    child: MoviePoster(
+                      imagePath: movie.posterPath,
+                    ),
                   ),
                   if (debugIndex != null) ...[
                     const Positioned.fill(child: TopGradient()),

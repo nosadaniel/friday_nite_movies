@@ -7,7 +7,7 @@ part of 'movies_search_query_notifier.dart';
 // **************************************************************************
 
 String _$moviesSearchQueryNotifierHash() =>
-    r'8c44189d735333199138c9a637f3f75ef5eb0c89';
+    r'a897b51dff54051a3e43759b993689a3d44509ab';
 
 /// A notifier class to keep track of search query with debouncing
 ///

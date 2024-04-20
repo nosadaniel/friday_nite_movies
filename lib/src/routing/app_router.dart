@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:friday_nite_movies/src/features/favorites/presentation/favorites_screen.dart';
 import 'package:friday_nite_movies/src/features/movies/domain/tmdb_movie.dart';
-import 'package:friday_nite_movies/src/features/movies/presentation/Movies_search_screen.dart';
-import 'package:friday_nite_movies/src/features/movies/presentation/movie_details_screen.dart';
+import 'package:friday_nite_movies/src/features/movies/presentation/movie/movie_details_screen.dart';
+import 'package:friday_nite_movies/src/features/movies/presentation/movies/Movies_search_screen.dart';
 import 'package:friday_nite_movies/src/routing/scaffold_with_nested_navigation.dart';
 import 'package:go_router/go_router.dart';
 

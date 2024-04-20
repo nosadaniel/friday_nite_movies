@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:friday_nite_movies/src/features/movies/data/providers/movies_repository_provider.dart';
 import 'package:friday_nite_movies/src/features/movies/domain/tmdb_movie.dart';
-import 'package:friday_nite_movies/src/features/movies/presentation/movie_list_tile.dart';
-import 'package:friday_nite_movies/src/features/movies/presentation/movie_list_tile_error.dart';
-import 'package:friday_nite_movies/src/features/movies/presentation/movie_list_tile_shimmer.dart';
-import 'package:friday_nite_movies/src/features/movies/presentation/movie_not_found.dart';
-import 'package:friday_nite_movies/src/features/movies/presentation/movies_search_bar.dart';
-import 'package:friday_nite_movies/src/features/movies/presentation/notifier_provider/movies_search_query_notifier.dart';
+import 'package:friday_nite_movies/src/features/movies/domain/tmdb_poster.dart';
+import 'package:friday_nite_movies/src/features/movies/presentation/movies/movie_list_tile_error.dart';
+import 'package:friday_nite_movies/src/features/movies/presentation/movies/movie_list_tile_shimmer.dart';
+import 'package:friday_nite_movies/src/features/movies/presentation/movies/movie_not_found.dart';
 import 'package:friday_nite_movies/src/routing/app_router.dart';
 import 'package:go_router/go_router.dart';
+
+import 'movie_list_tile.dart';
+import 'movies_search_bar.dart';
+import 'notifier_provider/movies_search_query_notifier.dart';
 
 class MoviesSearchScreen extends ConsumerWidget {
   const MoviesSearchScreen({super.key});
@@ -69,6 +71,7 @@ class MoviesSearchScreen extends ConsumerWidget {
                         return MovieListTile(
                           movie: movie,
                           debugIndex: index,
+                          posterSize: PosterSize.w154,
                           onPressed: () => context.goNamed(AppRoute.movie.name,
                               pathParameters: {'id': movie.id.toString()},
                               extra: movie),

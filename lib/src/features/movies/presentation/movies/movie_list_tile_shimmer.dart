@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:friday_nite_movies/src/common_widgets/movie_poster.dart';
-import 'package:friday_nite_movies/src/features/movies/presentation/movie_list_tile.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 
-class MovieListTileShimmer extends StatelessWidget {
-  const MovieListTileShimmer({super.key});
+import '../../../../helpers_providers/movie_poster_size.dart';
+import '../../domain/tmdb_poster.dart';
 
+class MovieListTileShimmer extends ConsumerWidget {
+  const MovieListTileShimmer({this.posterSize, super.key});
+  final PosterSize? posterSize;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final imageSize = ref.read(getImageSizeProvider(size: posterSize));
+
     return Shimmer.fromColors(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3.0),
         child: Row(
           children: [
             Container(
-              width: MovieListTile.posterHeight *
-                  (MoviePoster.width / MoviePoster.height),
-              height: MovieListTile.posterHeight,
+              width: 90 * (imageSize.width / imageSize.height),
+              height: 90,
               color: Colors.black,
             ),
             SizedBox(width: 8),

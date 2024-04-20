@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:friday_nite_movies/src/features/movies/presentation/notifier_provider/movies_search_query_notifier.dart';
 import 'package:friday_nite_movies/src/localization/string_hardcoded.dart';
+
+import 'notifier_provider/movies_search_query_notifier.dart';
 
 class MoviesSearchBar extends ConsumerStatefulWidget {
   const MoviesSearchBar({super.key});

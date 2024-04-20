@@ -11,6 +11,9 @@ enum PosterSize {
 class TMDBPoster {
   static String tmdbBaseImageUrl = "http://image.tmdb.org/t/p/";
 
-  static String imageUrl(String path, PosterSize size) =>
-      "$tmdbBaseImageUrl${size.name}$path";
+  static String imageUrl(String path, PosterSize size) {
+    final s = "$tmdbBaseImageUrl${size.name}$path";
+    //log("poster pather => $s");
+    return s;
+  }
 }
