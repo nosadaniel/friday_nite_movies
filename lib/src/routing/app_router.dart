@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:friday_nite_movies/src/features/favorites/presentation/favorites_screen.dart';
+import 'package:friday_nite_movies/src/features/movies/domain/tmdb_movie.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/Movies_search_screen.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/movie_details_screen.dart';
 import 'package:friday_nite_movies/src/routing/scaffold_with_nested_navigation.dart';
@@ -40,11 +41,12 @@ final goRouterProvider = Provider<GoRouter>(
                       name: AppRoute.movie.name,
                       pageBuilder: (context, state) {
                         final String id = state.pathParameters['id'] as String;
-                        //todo get movie object from goRoute state
-                        //final String? movie = state.extra is
+                        final TMDBMovie? movie = state.extra is TMDBMovie
+                            ? state.extra as TMDBMovie
+                            : null;
                         return MaterialPage(
                           key: state.pageKey,
-                          child: MovieDetailsScreen(id: id),
+                          child: MovieDetailsScreen(id: id, tmdbMovie: movie),
                         );
                       },
                     ),
