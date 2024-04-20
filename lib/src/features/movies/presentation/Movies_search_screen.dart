@@ -6,6 +6,7 @@ import 'package:friday_nite_movies/src/features/movies/data/providers/movies_rep
 import 'package:friday_nite_movies/src/features/movies/presentation/movie_list_tile.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/movie_list_tile_error.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/movie_list_tile_shimmer.dart';
+import 'package:friday_nite_movies/src/features/movies/presentation/movie_not_found.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/movies_search_bar.dart';
 import 'package:friday_nite_movies/src/features/movies/presentation/notifier_provider/movies_search_query_notifier.dart';
 
@@ -28,6 +29,7 @@ class MoviesSearchScreen extends ConsumerWidget {
       body: Column(
         children: [
           const MoviesSearchBar(),
+          totalResults == 0 ? MovieNotFound() : SizedBox.shrink(),
           Expanded(
             child: ListView.builder(
               // use a different key for each query, ensuring the scroll
@@ -54,7 +56,6 @@ class MoviesSearchScreen extends ConsumerWidget {
                       // This condition only happens if a null itemCount is given
                       // also when query does return empty result
                       if (indexInPage >= data.results.length) {
-                        //todo show some ui if result is empty
                         return null;
                       }
                       return MovieListTile(

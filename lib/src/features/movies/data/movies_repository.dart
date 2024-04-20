@@ -53,6 +53,7 @@ class MoviesRepository implements MoviesAbstractRepository {
     );
     final String url = uri.toString();
     final Response response = await client.get(url, cancelToken: cancelToken);
+    // log("search result => ${response.data}");
     return TMDBMoviesResponse.fromJson(response.data);
   }
 }
